@@ -1,36 +1,43 @@
 var bcSdk = require('../fabcar/query');
 
-const user = require('../models/patientData');
 
 exports.getHistory = (userId) => {
-   return new Promise((resolve, reject) => {
+    return new Promise((resolve, reject) => {
 
-           bcSdk.getHistory({
-                   userId: userId
+            bcSdk.getHistory({
+                    userId: userId
+                })
 
-               })
 
-.then(function (docs) {
-   if (docs.response == undefined) {
-   console.log(docs.response)
-       return resolve({
-           "status": 401,
-           "message": "record doesnot exits"
-       });
-   } else {
-       resolve({
-           "status": 200,
-           docs:docs
-       });
-   }
-})
-.catch(err => {
-   console.log(err)
-   reject({
-       "status": 500,
-       "message": 'Something went wrong please try again later!!'
-   });
+                .then((docs) => {
+                    console.log("out from chain", docs)
+                
+                    if(docs[0]==undefined){
+                        return resolve({
+                            status:400,
+                            "message":"Record does not exits "
 
-});
-});
-}
+                        });
+                     } else {
+
+                    return resolve({
+                        status: 201,
+                        docs: docs,
+
+                    })
+                }
+                   
+                })
+        })
+
+        .catch(err => {
+
+            console.log("error occurred" + err);
+
+            return reject({
+                status: 500,
+                message: 'Internal Server Error !'
+            });
+        })
+
+};

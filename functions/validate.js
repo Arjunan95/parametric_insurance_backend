@@ -11,20 +11,22 @@ exports.validate = (userId) => {
 
                 .then((docs) => {
                     console.log("out from chain", docs)
-                    // if(docs.response==undefined){
-                    //     return resolve({
-                    //         status:402,
-                    //         "message":"Record does not exits "
+                
+                    if(docs[0]==undefined){
+                        return resolve({
+                            status:400,
+                            "message":"Record does not exits "
 
-                    //     });
-                    //  } else {
+                        });
+                     } else {
 
                     return resolve({
                         status: 201,
                         docs: docs,
 
                     })
-               // }
+                }
+                   
                 })
         })
 

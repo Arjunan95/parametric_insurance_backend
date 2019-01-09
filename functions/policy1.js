@@ -13,14 +13,16 @@ exports.policy1 = (policyID, policys) => {
             }
         }
         // data.save()
-        bcSdk.savetransaction(data1).then((response) => {
+        bcSdk.savetransaction(data1)
+        .then((response) => {
 
             console.log(response)
             resolve({
                 status: 201,
-                message: 'Contract details saved'
+                 message: 'Contract details saved'
             })
-        }).catch(err => {
+        })
+        .catch(err => {
             reject({
                 status: 500,
                 message: 'Internal Server Error !'

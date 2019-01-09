@@ -2,6 +2,7 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 const tpa1Schema = mongoose.Schema({
+    patientData:Object,
     submitID: String, 
     status:String,
     message: String,

@@ -3,7 +3,7 @@ var Patient = require('../models/Tpa');
 var hold = require('../models/hold')
 var bcSdk = require('../fabcar/invoke')
 
-exports.autotpa = (keys, s, claimamount, claimAmount, submitID) => {
+exports.autotpa = (s, claimamount, claimAmount, submitID) => {
     console.log("claimamount", claimamount)
     console.log("claimAmount", claimAmount)
 
@@ -13,7 +13,7 @@ exports.autotpa = (keys, s, claimamount, claimAmount, submitID) => {
 
             var data = new hold({
 
-                "keys": s,
+                "patientData": s,
                 "submitID": submitID,
                 "claimAmount": claimAmount,
                 "status": "waiting for TPA approval",
@@ -25,6 +25,7 @@ exports.autotpa = (keys, s, claimamount, claimAmount, submitID) => {
                 created_at: new Date()
             });
             console.log("discharge summary====================>", data)
+          
             var ldata = {
                 updatedetails: {
 
@@ -73,7 +74,7 @@ exports.autotpa = (keys, s, claimamount, claimAmount, submitID) => {
         } else {
             var data = new Patient({
 
-                "keys": s,
+                "patientData": s,
 
                 "submitID": submitID,
                 "claimAmount": claimAmount,
@@ -97,7 +98,7 @@ exports.autotpa = (keys, s, claimamount, claimAmount, submitID) => {
             }
             data.save()
             .then(
-            bcSdk.updatetransaction(ldata))
+                bcSdk.updatetransaction(ldata))
 
                 .then(function(docs) {
                     if (docs.response == "record already exist!") {
@@ -125,9 +126,6 @@ exports.autotpa = (keys, s, claimamount, claimAmount, submitID) => {
 
 
         }
+    
     })
 }
-
-
-
-
